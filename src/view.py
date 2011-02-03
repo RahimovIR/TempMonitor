@@ -9,8 +9,7 @@ import common, datetime
 if __name__ == "__main__":
     b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
     #r = b.getTestTable()
-    r = b.getLinesFromTable("temperature")
-    b.addTempToBase(49.57)
+    r = b.getLastLineFromTable("temperature", 10)
     for i in r:
         print i[0],
         if i[1] != None:
