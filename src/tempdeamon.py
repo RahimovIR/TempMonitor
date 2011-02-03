@@ -7,14 +7,17 @@ __author__="ilyas"
 __date__ ="$02.02.2011 22:10:31$"
 
 import common
-import time, random
+import time, random, os
 
 
 DigiTemp = "/usr/bin/digitemp_DS9097"
-TimeOut = 1
+testhost = ('ilyas-HP-2140',)
+TimeOut = 60
+hostname = os.uname()[1]
 
 def GetTemp(IdSensor = 0):
-    return random.randint(40, 50)
+    if (hostname in testhost):
+        return random.randint(40, 50)
     parametr = ' -t %d -q -o "%%.2C" -c /home/nimda/.digitemprc' % (IdSensor)
     command = DigiTemp + parametr
     try:
@@ -25,15 +28,17 @@ def GetTemp(IdSensor = 0):
     except ValueError:
         return -100
 
-tempBase = common.base(host = 'localhost', base='mydb', user='postgres', password='325616')
-isWork = False
-i = 0
+tempBase = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
+
+isWork = True
+if (hostname in testhost):
+    isWork = False
+    print GetTemp(0)
+
 while isWork:
     curTemp = GetTemp(0)
     tempBase.addTempToBase(curTemp)
     time.sleep(TimeOut)
-    if i > 0: isWork = False
-    i += 1
 
 #r = tempBase.getLinesFromTable("temperature")
 #for i in r:
