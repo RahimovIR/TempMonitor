@@ -29,7 +29,7 @@ class base:
         line = self.cur.fetchone()
         if (line[0] == None):
             return (datetime.datetime.now(), -100)
-        maxId = int(self.cur.fetchone()[0])
+        maxId = int(line[0])
         self.cur.execute("""SELECT * FROM temperature WHERE (id = %s)""", (maxId,))
         line = self.cur.fetchone()
         return (line[1], line[2])
