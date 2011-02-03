@@ -8,7 +8,6 @@ import common, datetime
 
 if __name__ == "__main__":
     b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
-    #r = b.getTestTable()
     r = b.getLastLineFromTable("temperature", 10)
     for i in r:
         print i[0],
@@ -21,4 +20,3 @@ if __name__ == "__main__":
 #    print tempDate[0].strftime('%x %X'),
 #    print tempDate[1]
 
-    #b.setTestTable("6", "45234", "342985723")
