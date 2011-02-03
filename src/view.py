@@ -7,7 +7,7 @@ __date__ ="$29.01.2011 2:24:54$"
 import common, datetime
 
 if __name__ == "__main__":
-    b = common.base(host = 'localhost', base='mydb', user='postgres', password='325616')
+    b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
     #r = b.getTestTable()
     r = b.getLinesFromTable("temperature")
     b.addTempToBase(49.57)
@@ -19,7 +19,7 @@ if __name__ == "__main__":
             print "None",
         print i[2]
     tempDate = b.getTempFromBase()
-    print tempDate[0].strftime('%x %X'),
-    print tempDate[1]
+#    print tempDate[0].strftime('%x %X'),
+#    print tempDate[1]
 
     #b.setTestTable("6", "45234", "342985723")
