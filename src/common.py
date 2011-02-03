@@ -24,6 +24,20 @@ class base:
             self.cur.execute("""SELECT * FROM %s """ % table)
         return self.cur.fetchall()
 
+    def getLastLineFromTable(self, table='', numLines=1):
+        if (table == ''):
+            return None
+        self.cur.execute("""SELECT max(id) FROM temperature""")
+        line = self.cur.fetchone()
+        if (line[0] == None):
+            return (datetime.datetime.now(), -100)
+        maxId = int(line[0])
+        if (maxId < numLines):
+            numLines = maxId
+        self.cur.execute("""SELECT * FROM temperature WHERE (id > %s)""", (maxId - numLines,))
+        return self.cur.fetchall()
+
+
     def getTempFromBase(self):
         self.cur.execute("""SELECT max(id) FROM temperature""")
         line = self.cur.fetchone()
