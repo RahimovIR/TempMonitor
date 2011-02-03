@@ -118,3 +118,4 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 -- PostgreSQL database dump complete
 --
 
+GRANT UPDATE ON TABLE temperature_seq TO tempuser;
