@@ -7,7 +7,7 @@ __author__="ilyas"
 __date__ ="$02.02.2011 22:10:31$"
 
 import common
-import time, random, os
+import time, random, os, subprocess
 
 
 DigiTemp = "/usr/bin/digitemp_DS9097"
