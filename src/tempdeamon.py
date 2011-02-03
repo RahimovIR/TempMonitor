@@ -38,6 +38,7 @@ if (hostname in testhost):
 while isWork:
     curTemp = GetTemp(0)
     tempBase.addTempToBase(curTemp)
+    print curTemp
     time.sleep(TimeOut)
 
 #r = tempBase.getLinesFromTable("temperature")
