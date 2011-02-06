@@ -2,9 +2,6 @@
 import alert_env, re
 import sms_alert
 
-import time
-time.sleep(30)
-
 def WriteSMS2Log(sms):
     file = open('smslog.log', 'a')
     file.write(sms)

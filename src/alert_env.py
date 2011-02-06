@@ -1,25 +1,30 @@
-import subprocess
+import subprocess, os
 import time, io, tty
+import common
 
 HighTempLevel = 70
 LowTempLevel  = 30
 DigiTemp = "/usr/bin/digitemp_DS9097"
 Gnokii = "/usr/bin/gnokii"
-
+testhost = ('ilyas-HP-2140',)
+hostname = os.uname()[1]
+testsms = """
+1. Inbox Message (Unread)
+Date/time: 03/02/2011 11:03:49 +0500
+Sender: +79199230235 Msg Center: +79126313431
+Text:
+112
+"""
 
 def GetTemp(IdSensor = 0):
-    parametr = ' -t %d -q -o "%%.2C" -c /home/nimda/.digitemprc' % (IdSensor)
-    command = DigiTemp + parametr
-    try:
-        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-        process.wait()
-        out = process.communicate()[0]
-        return float(out)
-    except ValueError:
-        return -100
+    b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
+    return b.getTempFromBase()
 
 def SendSMS(num, text):
     command =  '/bin/echo "' + text + '" | ' + Gnokii + ' --sendsms ' + num
+    if hostname in testhost:
+        print command
+        return 0
     try:
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
         process.wait()
@@ -28,6 +33,8 @@ def SendSMS(num, text):
         return -100
 
 def GetSMS():
+    if hostname in testhost:
+        return testsms
     commands = Gnokii + ' --getsms ME '
     commands_delsms = Gnokii + ' --deletesms ME '
     count = 1
@@ -64,3 +71,6 @@ def GetBalance():
 
     p.close()
     return result
+
+if __name__ == "__main__":
+    print GetSMS()

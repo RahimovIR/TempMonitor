@@ -28,27 +28,20 @@ def GetTemp(IdSensor = 0):
     except ValueError:
         return -100
 
-tempBase = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
+if __name__ == '__main__':
+    tempBase = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
 
-isWork = True
-if (hostname in testhost):
-    isWork = False
-    print GetTemp(0)
+    isWork = True
+    if (hostname in testhost):
+        isWork = False
+        print GetTemp(0)
 
-while isWork:
-    curTemp = GetTemp(0)
-    tempBase.addTempToBase(curTemp)
-    print curTemp
-    time.sleep(TimeOut)
+    while isWork:
+        curTemp = GetTemp(0)
+        tempBase.addTempToBase(curTemp)
+        print curTemp
+        time.sleep(TimeOut)
 
-#r = tempBase.getLinesFromTable("temperature")
-#for i in r:
-#    print i[0],
-#    if i[1] != None:
-#        print i[1].strftime('%x %X'),
-#    else:
-#        print "None",
-#    print i[2]
-tempDate = tempBase.getTempFromBase()
-print tempDate[0].strftime('%x %X'),
-print tempDate[1]
+    tempDate = tempBase.getTempFromBase()
+    print tempDate[0].strftime('%x %X'),
+    print tempDate[1]

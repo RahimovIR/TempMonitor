@@ -17,6 +17,10 @@ if __name__ == "__main__":
             print "None",
         print i[2]
     tempDate = b.getTempFromBase()
+    print datetime.datetime.now()
+    if True : print b.user
+
+    
 #    print tempDate[0].strftime('%x %X'),
 #    print tempDate[1]
 

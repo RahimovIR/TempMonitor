@@ -39,6 +39,9 @@ class base:
 
 
     def getTempFromBase(self):
+        """
+        Return last date and temperature
+        """
         self.cur.execute("""SELECT max(id) FROM temperature""")
         line = self.cur.fetchone()
         if (line[0] == None):
@@ -47,7 +50,7 @@ class base:
         self.cur.execute("""SELECT * FROM temperature WHERE (id = %s)""", (maxId,))
         line = self.cur.fetchone()
         return (line[1], line[2])
-        
+
 
     def addTempToBase(self, temp):
         self.cur.execute("""INSERT INTO temperature (datetime, temp) VALUES (%s, %s)""" , (datetime.datetime.now(), temp))
