@@ -82,7 +82,7 @@ bot.online = 1
 while bot.online:
     bot.Process(1)
     now = datetime.datetime.now()
-    if (now - bot.statusTime > datetime.timedelta(seconds = 5)) :
+    if (now - bot.statusTime > datetime.timedelta(seconds = 60)) :
         SetStatus(bot, "online")
 
 bot.disconnect()
