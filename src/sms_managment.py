@@ -23,9 +23,19 @@ while (sms != None):
     print sender
     if sender != "+79199230235" and sender != "+79199230203":
         sender = "+79199230235"
-    if text.find('112'):
-        print sender
-        print text
+
+    if text.find('112') != -1:
         sms_alert.SendTempTo(num = sender, force = True)
+
+    if text.find('disdelta') != -1:
+        alert_env.SendSMSDelta = False
+        alert_env.writeConfig()
+        alert_env.SendSMS(num = sender, text = "Send SMS for delta: " + str(alert_env.SendSMSDelta))
+
+    if text.find('endelta') != -1:
+        alert_env.SendSMSDelta = True
+        alert_env.writeConfig()
+        alert_env.SendSMS(num = sender, text = "Send SMS for delta: " + str(alert_env.SendSMSDelta))
+
     break
     sms = alert_env.GetSMS()

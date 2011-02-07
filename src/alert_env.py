@@ -1,11 +1,54 @@
 import subprocess, os
 import time, io, tty
+import ConfigParser
 import common
+
+
+def readConfig():
+    config = ConfigParser.RawConfigParser()
+    config.read('alert_env.cfg')
+
+    HighTempLevel = config.getint('AlertLevel', 'HighTempLevel')
+    LowTempLevel  = config.getint('AlertLevel', 'LowTempLevel')
+    DigiTemp = config.get('Programs','DigiTemp')
+    Gnokii   = config.get('Programs','Gnokii')
+    SendSMSDelta = config.getboolean('SendSMS','Delta')
+    SendSMSTemp = config.getboolean('SendSMS','Temp')
+
+    if HighTempLevel == None: HighTempLevel = 70
+    if LowTempLevel == None: LowTempLevel  = 30
+    if DigiTemp == None: DigiTemp = "/usr/bin/digitemp_DS9097"
+    if Gnokii == None: Gnokii = "/usr/bin/gnokii"
+    if SendSMSTemp == None: SendSMSTemp = True
+    if SendSMSDelta == None: SendSMSDelta = True
+
+def writeConfig():
+    config = ConfigParser.RawConfigParser()
+
+    config.add_section('AlertLevel')
+    config.set('AlertLevel', 'HighTempLevel', str(HighTempLevel))
+    config.set('AlertLevel', 'LowTempLevel', str(LowTempLevel))
+
+    config.add_section('Programs')
+    config.set('Programs', 'DigiTemp', DigiTemp)
+    config.set('Programs', 'Gnokii', Gnokii)
+
+    config.add_section('SendSMS')
+    config.set('SendSMS', 'Delta', str(SendSMSDelta))
+    config.set('SendSMS', 'Temp', str(SendSMSTemp))
+
+    # Writing our configuration file to 'alert_env.cfg'
+    with open('alert_env.cfg', 'wb') as configfile:
+        config.write(configfile)
+
 
 HighTempLevel = 70
 LowTempLevel  = 30
 DigiTemp = "/usr/bin/digitemp_DS9097"
 Gnokii = "/usr/bin/gnokii"
+SendSMSTemp = True
+SendSMSDelta = True
+
 testhost = ('ilyas-HP-2140',)
 hostname = os.uname()[1]
 testsms = """
@@ -13,8 +56,12 @@ testsms = """
 Date/time: 03/02/2011 11:03:49 +0500
 Sender: +79199230235 Msg Center: +79126313431
 Text:
-112
+endelta
 """
+
+writeConfig()
+readConfig()
+
 
 def GetTemp(IdSensor = 0):
     b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')

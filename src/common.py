@@ -47,9 +47,9 @@ class base:
         if (line[0] == None):
             return (datetime.datetime.now(), -100)
         maxId = int(line[0])
-        self.cur.execute("""SELECT * FROM temperature WHERE (id = %s)""", (maxId,))
+        self.cur.execute("""SELECT *, now() - datetime as dlt FROM temperature WHERE (id = %s)""", (maxId,))
         line = self.cur.fetchone()
-        return (line[1], line[2])
+        return (line[1], line[2], line[3])
 
 
     def addTempToBase(self, temp):

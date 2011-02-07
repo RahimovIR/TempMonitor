@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
-import ConfigParser, xmpp, os, datetime
+import ConfigParser, xmpp, os, datetime, sys
+sys.path.append('/home/nimda/TempMonitor/src')
+import alert_env
+
 
 def LoadConfig():
     config = ConfigParser.ConfigParser()
@@ -83,6 +86,7 @@ while bot.online:
     bot.Process(1)
     now = datetime.datetime.now()
     if (now - bot.statusTime > datetime.timedelta(seconds = 60)) :
-        SetStatus(bot, "online")
+        temp = alert_env.GetTemp()
+        SetStatus(bot, "t: " + str(temp[1]) + " dlt: " + str(temp[2]) + " online")
 
 bot.disconnect()
