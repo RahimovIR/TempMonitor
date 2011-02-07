@@ -7,5 +7,6 @@ def init():
     return 0
 
 def run(bot, mess):
-    text = alert_env.GetTemp()
-    bot.send(xmpp.Message(mess.getFrom(), text[0].strftime("%d/%m/%y %H:%M:%S") + "\r\nTemp: " + str(text[1]) + "\r\nDelta: " + str(text[2])))
+    temp = alert_env.GetTemp()
+    strDelta = ':'.join(str(temp[2]).split(':')[:-1])
+    bot.send(xmpp.Message(mess.getFrom(), temp[0].strftime("%d/%m/%y %H:%M:%S") + "\r\nTemp: " + str(temp[1]) + "\r\nDelta: " + strDelta))

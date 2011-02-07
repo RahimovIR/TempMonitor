@@ -59,9 +59,8 @@ Text:
 endelta
 """
 
-writeConfig()
 readConfig()
-
+writeConfig()
 
 def GetTemp(IdSensor = 0):
     b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
