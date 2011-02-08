@@ -52,9 +52,9 @@ class base:
         return (line[1], line[2], line[3])
 
     def getMinMaxInDay(self):
-        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '10 day' ORDER BY temp LIMIT 1""")
+        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '1 day' ORDER BY temp LIMIT 1""")
         tmin = self.cur.fetchone()
-        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '10 day' ORDER BY temp DESC LIMIT 1""")
+        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '1 day' ORDER BY temp DESC LIMIT 1""")
         tmax = self.cur.fetchone()
         return (tmin, tmax)
 
