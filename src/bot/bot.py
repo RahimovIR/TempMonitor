@@ -87,7 +87,6 @@ while bot.online:
     now = datetime.datetime.now()
     if (now - bot.statusTime > datetime.timedelta(seconds = 60)) :
         temp = alert_env.GetTemp()
-        strDelta = ':'.join(str(temp[2]).split(':')[:-1])
-        SetStatus(bot, "t: " + str(temp[1]) + " dlt: " + strDelta + " online")
+        SetStatus(bot, "t: " + str(temp[1]) + " dlt: " + alert_env.GetShortDlt(temp[2]) + " online")
 
 bot.disconnect()

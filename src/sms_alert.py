@@ -6,7 +6,7 @@ import alert_env, datetime
 def SendTempTo(num = '+79199230235', force = False):
     temp = alert_env.GetTemp(0)
     delta = datetime.timedelta(minutes = 5)
-    strDelta = ':'.join(str(temp[2]).split(':')[:-1])
+    strDelta = alert_env.GetShortDlt(temp[2])
     time = temp[0].strftime("%d/%m/%y %H:%M:%S")
 
     if alert_env.SendSMSTemp and ( (alert_env.HighTempLevel < temp[1]) or (temp[1] < alert_env.LowTempLevel) ):

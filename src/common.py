@@ -51,6 +51,13 @@ class base:
         line = self.cur.fetchone()
         return (line[1], line[2], line[3])
 
+    def getMinMaxInDay(self):
+        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '10 day' ORDER BY temp LIMIT 1""")
+        tmin = self.cur.fetchone()
+        self.cur.execute("""SELECT * FROM temperature WHERE NOW() - datetime < interval '10 day' ORDER BY temp DESC LIMIT 1""")
+        tmax = self.cur.fetchone()
+        return (tmin, tmax)
+
 
     def addTempToBase(self, temp):
         self.cur.execute("""INSERT INTO temperature (datetime, temp) VALUES (%s, %s)""" , (datetime.datetime.now(), temp))
@@ -60,4 +67,5 @@ class base:
 
 
 if __name__ == '__main__':
-    pass
+    b = base(host = 'localhost', base='heating', user='tempuser', password='password')
+    print b.getMinMaxInDay()

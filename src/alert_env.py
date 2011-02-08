@@ -66,6 +66,14 @@ def GetTemp(IdSensor = 0):
     b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
     return b.getTempFromBase()
 
+def GetMinMaxInDay():
+    b = common.base(host = 'localhost', base='heating', user='tempuser', password='password')
+    return b.getMinMaxInDay()
+
+def GetShortDlt(dlt):
+    return ':'.join(str(dlt).split(':')[:-1])
+
+
 def SendSMS(num, text):
     command =  '/bin/echo "' + text + '" | ' + Gnokii + ' --sendsms ' + num
     if hostname in testhost:

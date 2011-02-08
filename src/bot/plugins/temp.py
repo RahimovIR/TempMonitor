@@ -8,5 +8,4 @@ def init():
 
 def run(bot, mess):
     temp = alert_env.GetTemp()
-    strDelta = ':'.join(str(temp[2]).split(':')[:-1])
-    bot.send(xmpp.Message(mess.getFrom(), temp[0].strftime("%d/%m/%y %H:%M:%S") + "\r\nTemp: " + str(temp[1]) + "\r\nDelta: " + strDelta))
+    bot.send(xmpp.Message(mess.getFrom(), temp[0].strftime("%d/%m/%y %H:%M:%S") + "\r\nTemp: " + str(temp[1]) + "\r\nDelta: " + alert_env.GetShortDlt(temp[2])))
